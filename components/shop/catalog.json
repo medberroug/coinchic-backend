@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_shop_catalogs",
+  "info": {
+    "name": "catalog",
+    "icon": "address-book"
+  },
+  "options": {},
+  "attributes": {
+    "categoryName": {
+      "type": "string"
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shop.items"
+    }
+  }
+}

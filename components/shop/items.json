@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shop_items",
+  "info": {
+    "name": "items",
+    "icon": "anchor"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "price": {
+      "type": "decimal"
+    }
+  }
+}

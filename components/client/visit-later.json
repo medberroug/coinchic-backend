@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_client_visit_laters",
+  "info": {
+    "name": "visitLater",
+    "icon": "american-sign-language-interpreting"
+  },
+  "options": {},
+  "attributes": {
+    "shop": {
+      "model": "shop"
+    },
+    "date": {
+      "type": "datetime"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_client_likes",
+  "info": {
+    "name": "likes",
+    "icon": "archway"
+  },
+  "options": {},
+  "attributes": {
+    "date": {
+      "type": "datetime"
+    },
+    "shop": {
+      "model": "shop"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_shop_reviews",
+  "info": {
+    "name": "reviews",
+    "icon": "arrow-alt-circle-right",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "comment": {
+      "type": "text"
+    },
+    "rating": {
+      "type": "decimal"
+    },
+    "date": {
+      "type": "datetime"
+    },
+    "client": {
+      "model": "client"
+    }
+  }
+}

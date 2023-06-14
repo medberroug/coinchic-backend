@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "clients",
+  "info": {
+    "name": "client"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "likes": {
+      "type": "component",
+      "repeatable": true,
+      "component": "client.likes"
+    },
+    "visitLater": {
+      "type": "component",
+      "repeatable": true,
+      "component": "client.visit-later"
+    }
+  }
+}

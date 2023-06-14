@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_shop_addresses",
+  "info": {
+    "name": "address",
+    "icon": "align-right"
+  },
+  "options": {},
+  "attributes": {
+    "lat": {
+      "type": "string"
+    },
+    "long": {
+      "type": "string"
+    },
+    "street": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    }
+  }
+}

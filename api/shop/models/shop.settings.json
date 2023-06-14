@@ -1,0 +1,91 @@
+{
+  "kind": "collectionType",
+  "collectionName": "shops",
+  "info": {
+    "name": "shop",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "subType": {
+      "type": "string"
+    },
+    "address": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shop.address"
+    },
+    "reviews": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shop.reviews"
+    },
+    "avgReview": {
+      "type": "decimal"
+    },
+    "firstImage": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "images": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "videos": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "catalog": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shop.catalog"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "popular": {
+      "type": "boolean",
+      "default": false
+    },
+    "status": {
+      "type": "boolean",
+      "default": false
+    },
+    "waitingValidation": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}
