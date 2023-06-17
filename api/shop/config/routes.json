@@ -50,8 +50,25 @@
     },
     {
       "method": "GET",
-      "path": "/getShops",
-      "handler": "shop.getShops",
+      "path": "/getTopShops/:clientId",
+      "handler": "shop.getTopShops",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/visitLater/:clientId",
+      "handler": "shop.visitLater",
+      "config": {
+        "policies": []
+      }
+    }
+    ,
+    {
+      "method": "GET",
+      "path": "/getAllShops/:clientId",
+      "handler": "shop.getAllShops",
       "config": {
         "policies": []
       }
