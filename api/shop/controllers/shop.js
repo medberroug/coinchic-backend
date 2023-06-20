@@ -170,7 +170,9 @@ module.exports = {
         return true
     },
     async visitedController(ctx) {
-        const { clientId, shopId, feedback, rating } = ctx.params;
+        const { clientId, shopId } = ctx.params;
+        let rating= ctx.request.body.rating
+        let feedback= ctx.request.body.feedback
         let shop = await strapi.services.shop.findOne({
             id: shopId,
         });

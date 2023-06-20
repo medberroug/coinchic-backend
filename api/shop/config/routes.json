@@ -98,8 +98,8 @@
       }
     },
     {
-      "method": "GET",
-      "path": "/visitedController/:clientId/:shopId/:feedback/:rating",
+      "method": "POST",
+      "path": "/visitedController/:clientId/:shopId",
       "handler": "shop.visitedController",
       "config": {
         "policies": []
