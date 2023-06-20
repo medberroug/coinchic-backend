@@ -72,6 +72,30 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "GET",
+      "path": "/getOneShop/:clientId/:shopId",
+      "handler": "shop.getOneShop",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/getShopMenu/:shopId",
+      "handler": "shop.getShopMenu",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/likeController/:clientId/:shopId",
+      "handler": "shop.likeController",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }
