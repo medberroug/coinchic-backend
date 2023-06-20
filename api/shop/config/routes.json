@@ -96,6 +96,22 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "GET",
+      "path": "/visitedController/:clientId/:shopId/:feedback/:rating",
+      "handler": "shop.visitedController",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/visitLaterController/:clientId/:shopId",
+      "handler": "shop.visitLaterController",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

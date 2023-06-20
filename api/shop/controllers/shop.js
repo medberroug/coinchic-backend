@@ -129,7 +129,7 @@ module.exports = {
         let client = await strapi.services.client.findOne({
             id: clientId
         })
-       
+
         let liked = isLiked(client, shop.id)
         console.log(liked);
         if (!liked) {
@@ -152,7 +152,7 @@ module.exports = {
         });
         return true
     },
-    async visitLaterController(ctx){
+    async visitLaterController(ctx) {
         const { clientId, shopId } = ctx.params;
         let shop = await strapi.services.shop.findOne({
             id: shopId,
@@ -160,8 +160,53 @@ module.exports = {
         let client = await strapi.services.client.findOne({
             id: clientId
         })
-       
-    }
+        client.visitLater.push({
+            shop: {id: shopId},
+            date : new Date()
+        })
+        await strapi.services.client.update({ id: clientId }, {
+            visitLater: client.visitLater
+        });
+        return true
+    },
+    async visitedController(ctx) {
+        const { clientId, shopId, feedback, rating } = ctx.params;
+        let shop = await strapi.services.shop.findOne({
+            id: shopId,
+        });
+        let client = await strapi.services.client.findOne({
+            id: clientId
+        })
+        let myNewList = []
+        for (let i = 0; i < client.visitLater.length; i++) {
+            if (client.visitLater[i].shop.id != shopId) {
+                myNewList.push(client.visitLater[i])
+            }
+        }
+        let myComment = feedback
+        if (!myComment) {
+            myComment = '-'
+        }
+        let myRating = rating
+        if (!myRating) {
+            myRating = shop.avgReview
+        }
+        shop.reviews.push({
+            client: {id: clientId},
+            comment: myComment,
+            rating: myRating,
+            date: new Date()
+        })
+        await strapi.services.client.update({ id: clientId }, {
+            visitLater: myNewList,
+        });
+        await strapi.services.shop.update({ id: shopId }, {
+            reviews: shop.reviews,
+            avgReview: calculateNewRating(shop, myRating)
+        })
+        return true
+
+    },
 
 
 };
@@ -240,4 +285,19 @@ function returnShopReviews(shop) {
         })
     }
     return myReviews
+}
+
+function calculateNewRating(shop, rating) {
+    console.log("XXXXXXXXXRATUNG");
+    let myNewRating = 0
+    for (let i = 0; i < shop.reviews.length; i++) {
+        console.log(shop.reviews[i].rating);
+        myNewRating = myNewRating + parseFloat(shop.reviews[i].rating)
+    }
+    console.log(myNewRating);
+    if (shop.reviews.length > 0) {
+      
+        return (myNewRating / shop.reviews.length).toFixed(2)
+    }
+    return rating.toFixed(2)
 }
