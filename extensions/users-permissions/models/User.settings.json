@@ -61,6 +61,10 @@
     },
     "shop": {
       "model": "shop"
+    },
+    "client": {
+      "model": "client",
+      "via": "user"
     }
   }
 }

@@ -23,6 +23,11 @@
       "type": "component",
       "repeatable": true,
       "component": "client.visit-later"
+    },
+    "user": {
+      "via": "client",
+      "plugin": "users-permissions",
+      "model": "user"
     }
   }
 }
