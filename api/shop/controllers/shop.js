@@ -283,9 +283,31 @@ module.exports = {
         let shop = await strapi.services.shop.findOne({
             id: shopId,
         });
-        let fileId = ctx.request.body.fileId
+        let fileId = ctx.request.body.fileId.id
         let type = ctx.request.body.type
-        console.log(fileId, type);
+        if (type == "firstImage") {
+            await strapi.services.shop.update({ id: shopId }, {
+                firstImage: {
+                    id: fileId
+                },
+            })
+        } else if (type == "images") {
+            shop.images.push({
+                id: fileId
+            })
+            await strapi.services.shop.update({ id: shopId }, {
+                images: shop.images,
+            })
+        } else if (type == "videos") {
+            shop.videos.push({
+                id: fileId
+            })
+            await strapi.services.shop.update({ id: shopId }, {
+                videos: shop.videos,
+            })
+        }
+
+        return true
 
     }
 
