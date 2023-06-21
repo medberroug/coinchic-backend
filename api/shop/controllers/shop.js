@@ -277,6 +277,16 @@ module.exports = {
         let createdShop = await strapi.services.shop.create(myNewShop);
         await strapi.plugins['users-permissions'].services.user.edit({ id: client.user.id }, { shop: createdShop.id });
         return true
+    },
+    async addFilesToShop(ctx) {
+        const { shopId } = ctx.params;
+        let shop = await strapi.services.shop.findOne({
+            id: shopId,
+        });
+        let fileId = ctx.request.body.fileId
+        let type = ctx.request.body.type
+        console.log(fileId, type);
+
     }
 
 
