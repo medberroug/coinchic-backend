@@ -1,5 +1,6 @@
 'use strict';
-
+var isWithinInterval = require('date-fns/isWithinInterval')
+var parseISO = require('date-fns/parseISO')
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#core-controllers)
  * to customize this controller
@@ -161,8 +162,8 @@ module.exports = {
             id: clientId
         })
         client.visitLater.push({
-            shop: {id: shopId},
-            date : new Date()
+            shop: { id: shopId },
+            date: new Date()
         })
         await strapi.services.client.update({ id: clientId }, {
             visitLater: client.visitLater
@@ -171,8 +172,8 @@ module.exports = {
     },
     async visitedController(ctx) {
         const { clientId, shopId } = ctx.params;
-        let rating= ctx.request.body.rating
-        let feedback= ctx.request.body.feedback
+        let rating = ctx.request.body.rating
+        let feedback = ctx.request.body.feedback
         let shop = await strapi.services.shop.findOne({
             id: shopId,
         });
@@ -194,7 +195,7 @@ module.exports = {
             myRating = shop.avgReview
         }
         shop.reviews.push({
-            client: {id: clientId},
+            client: { id: clientId },
             comment: myComment,
             rating: myRating,
             date: new Date()
@@ -209,6 +210,63 @@ module.exports = {
         return true
 
     },
+    async getOffers(ctx) {
+        const { clientId } = ctx.params;
+        let shops = await strapi.services.shop.find();
+        let client = await strapi.services.client.findOne({
+            id: clientId
+        })
+
+        let myShops = []
+        for (let i = 0; i < shops.length; i++) {
+            if (shops[i].offer) {
+                if (isWithinInterval(new Date(), {
+                    start: parseISO(shops[i].offer.from),
+                    end: parseISO(shops[i].offer.to)
+                })) {
+                    myShops.push({
+                        id: shops[i].id,
+                        name: shops[i].name,
+                        firstImage: shops[i].firstImage ? shops[i].firstImage.url : null,
+                        type: shops[i].type,
+                        subType: shops[i].subType,
+                        avgReview: shops[i].avgReview,
+                        address: shops[i].address.street + ', ' + shops[i].address.city,
+                        liked: isLiked(client, shops[i].id),
+                        isVisited: isVisited(client, shops[i].reviews),
+                        isVisitLater: isVisitLater(client, shops[i].id),
+                        popular: shops[i].popular,
+                        offer: shops[i].offer.offer
+                    })
+                }
+            }
+        }
+        if (myShops.length > 0) {
+            return {
+                show: true,
+                shops: myShops
+            }
+        } else {
+            return {
+                show: false,
+                shops: []
+            }
+        }
+        // let myShop = {
+        //     id: shop.id,
+        //     name: shop.name,
+        //     firstImage: shop.firstImage ? shop.firstImage.url : null,
+        //     type: shop.type,
+        //     subType: shop.subType,
+        //     avgReview: shop.avgReview,
+        //     address: shop.address.street + ', ' + shop.address.city,
+        //     liked: isLiked(client, shop.id),
+        //     isVisited: isVisited(client, shop.reviews),
+        //     isVisitLater: isVisitLater(client, shop.id),
+        //     popular: shop.popular
+        // }
+
+    }
 
 
 };
@@ -298,7 +356,7 @@ function calculateNewRating(shop, rating) {
     }
     console.log(myNewRating);
     if (shop.reviews.length > 0) {
-      
+
         return (myNewRating / shop.reviews.length).toFixed(2)
     }
     return rating.toFixed(2)

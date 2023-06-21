@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_shop_offers",
+  "info": {
+    "name": "offer",
+    "icon": "angle-double-down"
+  },
+  "options": {},
+  "attributes": {
+    "offer": {
+      "type": "string"
+    },
+    "from": {
+      "type": "datetime"
+    },
+    "to": {
+      "type": "datetime"
+    }
+  }
+}

@@ -112,6 +112,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "GET",
+      "path": "/getOffers/:clientId",
+      "handler": "shop.getOffers",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }
