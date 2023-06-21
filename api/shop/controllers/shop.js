@@ -276,7 +276,7 @@ module.exports = {
         }
         let createdShop = await strapi.services.shop.create(myNewShop);
         await strapi.plugins['users-permissions'].services.user.edit({ id: client.user.id }, { shop: createdShop.id });
-        return true
+        return createdShop.id
     },
     async addFilesToShop(ctx) {
         const { shopId } = ctx.params;
