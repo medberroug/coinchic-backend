@@ -120,6 +120,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "POST",
+      "path": "/createShop/:clientId",
+      "handler": "shop.createShop",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

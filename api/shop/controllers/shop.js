@@ -111,7 +111,8 @@ module.exports = {
             images: returnShopImages(shop),
             videos: returnShopVideos(shop),
             reviews: returnShopReviews(shop),
-            description: shop.description
+            description: shop.description,
+            menuAdded: shop.catalog.length > 0 ? true : false,
         }
         return myShop
     },
@@ -252,20 +253,30 @@ module.exports = {
                 shops: []
             }
         }
-        // let myShop = {
-        //     id: shop.id,
-        //     name: shop.name,
-        //     firstImage: shop.firstImage ? shop.firstImage.url : null,
-        //     type: shop.type,
-        //     subType: shop.subType,
-        //     avgReview: shop.avgReview,
-        //     address: shop.address.street + ', ' + shop.address.city,
-        //     liked: isLiked(client, shop.id),
-        //     isVisited: isVisited(client, shop.reviews),
-        //     isVisitLater: isVisitLater(client, shop.id),
-        //     popular: shop.popular
-        // }
+    },
+    async createShop(ctx) {
+        const { clientId } = ctx.params;
+        let client = await strapi.services.client.findOne({
+            id: clientId
+        })
+        // let rating = ctx.request.body.rating
+        let myNewShop = {
+            name: ctx.request.body.name,
+            type: ctx.request.body.name,
+            subType: ctx.request.body.subType,
+            address: {
+                street: ctx.request.body.street,
+                city: ctx.request.body.city,
+                country: 'Togo'
+            },
+            avgReview: 5,
+            phone: ctx.request.body.phone,
+            description: ctx.request.body.description,
 
+        }
+        let createdShop = await strapi.services.shop.create(myNewShop);
+        await strapi.plugins['users-permissions'].services.user.edit({ id: client.user.id }, { shop: createdShop.id });
+        return true
     }
 
 
