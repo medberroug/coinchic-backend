@@ -309,6 +309,36 @@ module.exports = {
 
         return true
 
+    },
+    async getProfile(ctx) {
+        const { clientId } = ctx.params;
+        let client = await strapi.services.client.findOne({
+            id: clientId
+        })
+        let myShop = null
+        let shopPending = false
+        if (client.user.shop) {
+            let shop = await strapi.services.shop.findOne({
+                id: client.user.shop,
+            });
+            if (shop.waitingValidation) {
+                shopPending = true
+            } else {
+                myShop = shop
+            }
+
+
+        }
+
+        let myProfile = {
+            name: client.name,
+            shopExist: client.user.shop ? true : false,
+            shopPending: shopPending,
+            shop: myShop
+
+        }
+        return myProfile
+
     }
 
 

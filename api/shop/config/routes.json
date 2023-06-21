@@ -63,8 +63,7 @@
       "config": {
         "policies": []
       }
-    }
-    ,
+    },
     {
       "method": "GET",
       "path": "/getAllShops/:clientId",
@@ -133,6 +132,14 @@
       "method": "POST",
       "path": "/addFilesToShop/:shopId",
       "handler": "shop.addFilesToShop",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/getProfile/:clientId",
+      "handler": "shop.getProfile",
       "config": {
         "policies": []
       }
