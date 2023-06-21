@@ -143,6 +143,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "GET",
+      "path": "/getCategories",
+      "handler": "shop.getCategories",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

@@ -339,6 +339,16 @@ module.exports = {
         }
         return myProfile
 
+    },
+    async getCategories(ctx) {
+        let categories = await strapi.services.categories.find({
+            status: true
+        })
+        let myCategories = []
+        for (let i=0; i<categories.length;i++){
+            myCategories.push(categories[i].name)
+        }
+        return myCategories
     }
 
 
