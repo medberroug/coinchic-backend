@@ -262,7 +262,7 @@ module.exports = {
         // let rating = ctx.request.body.rating
         let myNewShop = {
             name: ctx.request.body.name,
-            type: ctx.request.body.name,
+            type: ctx.request.body.type,
             subType: ctx.request.body.subType,
             address: {
                 street: ctx.request.body.street,
@@ -345,10 +345,62 @@ module.exports = {
             status: true
         })
         let myCategories = []
-        for (let i=0; i<categories.length;i++){
+        for (let i = 0; i < categories.length; i++) {
             myCategories.push(categories[i].name)
         }
         return myCategories
+    },
+    async search(ctx) {
+        const { searchTerm, clientId } = ctx.params;
+        let myresult = await strapi.query('shop').model.query(qb => {
+            qb.where('name', 'LIKE', `%${searchTerm}%`)
+                .orWhere('description', 'LIKE', `%${searchTerm}%`)
+                .orWhere('subType', 'LIKE', `%${searchTerm}%`)
+                .orWhere('Type', 'LIKE', `%${searchTerm}%`);
+        }).fetchAll();
+        myresult = myresult.toJSON()
+        let client = await strapi.services.client.findOne({
+            id: clientId
+        })
+        let myShops = []
+        console.log(myresult);
+        for (let i = 0; i < myresult.length; i++) {
+
+            myShops.push(returnShopDataForApp(myresult[i], client))
+        }
+        return myShops
+    },
+    async filter(ctx) {
+        const { type, city, stars, popular, clientId } = ctx.query;
+        let client = await strapi.services.client.findOne({
+            id: clientId
+        })
+        // Fetch all restaurants
+        let resultsArray = await strapi.services.shop.find({
+            status: true,
+        });
+        // let resultsArray = result.toJSON(); // Convert to plain array
+
+        // Perform filtering
+        if (type) {
+            resultsArray = resultsArray.filter(shop => shop.type === type);
+        }
+        if (city) {
+            resultsArray = resultsArray.filter(shop => shop.address && shop.address.city === city);
+        }
+        if (stars) {
+            resultsArray = resultsArray.filter(shop => shop.avgReview >= stars);
+        }
+        if (popular && (popular === 'true')) {
+            resultsArray = resultsArray.filter(shop => shop.popular ===  (popular === 'true'));
+        }
+        let myShops = []
+        // resultsArray = result.toJSON(); // Convert to plain array
+        for (let i = 0; i < resultsArray.length; i++) {
+
+            myShops.push(returnShopDataForApp(resultsArray[i], client))
+        }
+        return myShops;
     }
 
 
@@ -357,7 +409,7 @@ module.exports = {
 
 
 
-
+// /filter/1?type=Bar&stars=5&popular=true&city=Paris
 
 
 

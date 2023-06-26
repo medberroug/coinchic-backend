@@ -151,6 +151,22 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "GET",
+      "path": "/search/:searchTerm/:clientId",
+      "handler": "shop.search",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/filter/:clientId",
+      "handler": "shop.filter",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }
