@@ -267,7 +267,9 @@ module.exports = {
             address: {
                 street: ctx.request.body.street,
                 city: ctx.request.body.city,
-                country: 'Togo'
+                country: 'Togo',
+                let: ctx.request.body.lat,
+                long: ctx.request.body.long,
             },
             avgReview: 5,
             phone: ctx.request.body.phone,
