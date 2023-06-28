@@ -285,16 +285,12 @@ module.exports = {
         let shop = await strapi.services.shop.findOne({
             id: shopId,
         });
-        let fileId = JSON.parse(ctx.request.body.fileId);
+        let fileId = ctx.request.body.fileId
         let type = ctx.request.body.type
-        console.log(shopId);
-        console.log(fileId);
-        console.log(fileId[0]);
-        console.log(type);
         if (type == "firstImage") {
             await strapi.services.shop.update({ id: shopId }, {
                 firstImage: {
-                    id: fileId[0].id
+                    id: fileId
                 },
             })
         } else if (type == "images") {
