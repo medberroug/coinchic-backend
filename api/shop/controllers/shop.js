@@ -268,7 +268,7 @@ module.exports = {
                 street: ctx.request.body.street,
                 city: ctx.request.body.city,
                 country: 'Togo',
-                let: ctx.request.body.lat.match(/lat: (\d+\.\d+)/)[1],
+                lat: ctx.request.body.lat.match(/lat: (\d+\.\d+)/)[1],
                 long: ctx.request.body.long.match(/lng: (-?\d+\.\d+)/)[1],
             },
             avgReview: 5,
@@ -287,27 +287,30 @@ module.exports = {
         });
         let fileId = ctx.request.body.fileId.id
         let type = ctx.request.body.type
-        if (type == "firstImage") {
-            await strapi.services.shop.update({ id: shopId }, {
-                firstImage: {
-                    id: fileId
-                },
-            })
-        } else if (type == "images") {
-            shop.images.push({
-                id: fileId
-            })
-            await strapi.services.shop.update({ id: shopId }, {
-                images: shop.images,
-            })
-        } else if (type == "videos") {
-            shop.videos.push({
-                id: fileId
-            })
-            await strapi.services.shop.update({ id: shopId }, {
-                videos: shop.videos,
-            })
-        }
+        console.log(shopId);
+        console.log(fileId);
+        console.log(type);
+        // if (type == "firstImage") {
+        //     await strapi.services.shop.update({ id: shopId }, {
+        //         firstImage: {
+        //             id: fileId
+        //         },
+        //     })
+        // } else if (type == "images") {
+        //     shop.images.push({
+        //         id: fileId
+        //     })
+        //     await strapi.services.shop.update({ id: shopId }, {
+        //         images: shop.images,
+        //     })
+        // } else if (type == "videos") {
+        //     shop.videos.push({
+        //         id: fileId
+        //     })
+        //     await strapi.services.shop.update({ id: shopId }, {
+        //         videos: shop.videos,
+        //     })
+        // }
 
         return true
 
