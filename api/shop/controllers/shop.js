@@ -268,8 +268,8 @@ module.exports = {
                 street: ctx.request.body.street,
                 city: ctx.request.body.city,
                 country: 'Togo',
-                let: ctx.request.body.lat,
-                long: ctx.request.body.long,
+                let: ctx.request.body.lat.match(/lat: (\d+\.\d+)/)[1],
+                long: ctx.request.body.long.match(/lng: (-?\d+\.\d+)/)[1],
             },
             avgReview: 5,
             phone: ctx.request.body.phone,
@@ -394,7 +394,7 @@ module.exports = {
             resultsArray = resultsArray.filter(shop => shop.avgReview >= stars);
         }
         if (popular && (popular === 'true')) {
-            resultsArray = resultsArray.filter(shop => shop.popular ===  (popular === 'true'));
+            resultsArray = resultsArray.filter(shop => shop.popular === (popular === 'true'));
         }
         let myShops = []
         // resultsArray = result.toJSON(); // Convert to plain array
