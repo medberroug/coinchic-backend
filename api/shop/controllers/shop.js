@@ -428,6 +428,7 @@ module.exports = {
         }
         return {
             shopId: shop.id,
+            naem: shop.name,
             avgReview: avgReview,
             likes: likes,
             visitLater: visitLater,
