@@ -428,6 +428,7 @@ module.exports = {
         }
         return {
             shopId: shop.id,
+            avgReview: avgReview,
             likes: likes,
             visitLater: visitLater,
             isCatalog: catalog.length > 0 ? true : false,
