@@ -167,6 +167,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "GET",
+      "path": "/KPIShopManager/:shopId",
+      "handler": "shop.KPIShopManager",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

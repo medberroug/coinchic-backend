@@ -21,7 +21,7 @@ module.exports = {
             id: clientId
         })
         let topShopsByCategories = [
-            { name: 'Tous', shops: [] },
+            { name: 'Tous', icon: null, shops: [] },
         ]
         for (let i = 0; i < allPopularShops.length; i++) {
             let insterted = false
@@ -40,6 +40,7 @@ module.exports = {
             if (!insterted) {
                 topShopsByCategories.push({
                     name: allPopularShops[i].type,
+                    icon: null,
                     shops: [
                         returnShopDataForApp(allPopularShops[i], client)
                     ]
@@ -267,9 +268,9 @@ module.exports = {
             address: {
                 street: ctx.request.body.street,
                 city: ctx.request.body.city,
-                country: 'Togo',
+                country: ctx.request.body.country,
                 lat: ctx.request.body.lat.match(/lat: (\d+\.\d+)/) ? ctx.request.body.lat.match(/lat: (\d+\.\d+)/)[1] : 0,
-                long: ctx.request.body.long.match(/lng: (-?\d+\.\d+)/)  ? ctx.request.body.long.match(/lng: (-?\d+\.\d+)/)[1] : 0,
+                long: ctx.request.body.long.match(/lng: (-?\d+\.\d+)/) ? ctx.request.body.long.match(/lng: (-?\d+\.\d+)/)[1] : 0,
             },
             avgReview: 5,
             phone: ctx.request.body.phone,
@@ -328,8 +329,6 @@ module.exports = {
             } else {
                 myShop = shop
             }
-
-
         }
 
         let myProfile = {
@@ -403,8 +402,42 @@ module.exports = {
             myShops.push(returnShopDataForApp(resultsArray[i], client))
         }
         return myShops;
-    }
+    },
+    async KPIShopManager(ctx) {
+        const { shopId } = ctx.params;
+        let shop = await strapi.services.shop.findOne({
+            id: shopId,
+        });
+        let client = await strapi.services.client.find()
+        let avgReview = null
+        let likes = 0
+        let visitLater = 0
+        avgReview = shop.avgReview
+        for (let i = 0; i < client.length; i++) {
+            for (let j = 0; j < client[i].likes.length; j++) {
+                if (shop.id == client[i].likes[j].shop.id) {
+                    likes = likes + 1
+                }
+            }
+            for (let k = 0; k < client[i].visitLater.length; k++) {
+                if (shop.id == client[i].visitLater[k].shop.id) {
+                    visitLater = visitLater + 1
+                }
+            }
 
+        }
+        return {
+            shopId: shop.id,
+            likes: likes,
+            visitLater: visitLater,
+            isCatalog: catalog.length > 0 ? true : false,
+            isActive: shop.status
+        }
+
+
+
+
+    }
 
 };
 
