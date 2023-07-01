@@ -432,7 +432,7 @@ module.exports = {
             avgReview: avgReview,
             likes: likes,
             visitLater: visitLater,
-            isCatalog: catalog.length > 0 ? true : false,
+            isCatalog: shop.catalog.length > 0 ? true : false,
             isActive: shop.status
         }
 
