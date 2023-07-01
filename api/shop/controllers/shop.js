@@ -21,7 +21,7 @@ module.exports = {
             id: clientId
         })
         let topShopsByCategories = [
-            { name: 'Tous', icon: null, shops: [] },
+            { name: 'Tous', icon: "uploads/all_inclusive_116777_1246fe2ee6.png?2659324.100000024", shops: [] },
         ]
         for (let i = 0; i < allPopularShops.length; i++) {
             let insterted = false
@@ -38,9 +38,15 @@ module.exports = {
                 }
             }
             if (!insterted) {
+                let myIcon = null
+                for (let k = 0; k < categories.length; k++) {
+                    if (categories[k].name == allPopularShops[i].type) {
+                        myIcon = categories[k].icon ? categories[k].icon.url : null
+                    }
+                }
                 topShopsByCategories.push({
                     name: allPopularShops[i].type,
-                    icon: null,
+                    icon: myIcon,
                     shops: [
                         returnShopDataForApp(allPopularShops[i], client)
                     ]
