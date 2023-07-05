@@ -175,10 +175,19 @@
       "config": {
         "policies": []
       }
-    },{
+    },
+    {
       "method": "POST",
       "path": "/editMenu/:shopId",
       "handler": "shop.editMenu",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/editArticle/:shopId",
+      "handler": "shop.editArticle",
       "config": {
         "policies": []
       }

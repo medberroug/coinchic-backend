@@ -473,9 +473,9 @@ module.exports = {
             }
         } else if (ctx.request.body.action == "delete") {
             for (let i = 0; i < shop.catalog.length; i++) {
-                let index
+
                 if (shop.catalog[i].id == ctx.request.body.catalogId) {
-                    shop.catalog.splice(i,1)
+                    shop.catalog.splice(i, 1)
                     await strapi.services.shop.update({ id: shopId }, {
                         catalog: shop.catalog,
                     })
@@ -483,8 +483,43 @@ module.exports = {
                 }
             }
         }
+    },
 
-
+    async editArticle(ctx) {
+        const { shopId } = ctx.params;
+        let shop = await strapi.services.shop.findOne({
+            id: shopId,
+        });
+       if (ctx.request.body.action == "create") {
+            for (let i = 0; i < shop.catalog.length; i++) {
+                if (shop.catalog[i].id == ctx.request.body.catalogId) {
+                    shop.catalog[i].items.push({
+                        name: ctx.request.body.name,
+                        description: ctx.request.body.description,
+                        price: ctx.request.body.price
+                    })
+                    await strapi.services.shop.update({ id: shopId }, {
+                        catalog: shop.catalog,
+                    })
+                    return true
+                }
+            }
+        } else if (ctx.request.body.action == "delete") {
+            for (let i = 0; i < shop.catalog.length; i++) {
+                if (shop.catalog[i].id == ctx.request.body.catalogId) {
+                    
+                    for(let j=0;j<shop.catalog[i].items.length;j++){
+                        if(shop.catalog[i].items[i].id == ctx.request.body.itemId){
+                            shop.catalog[i].items.splice(j, 1)
+                        }
+                    }
+                    await strapi.services.shop.update({ id: shopId }, {
+                        catalog: shop.catalog,
+                    })
+                    return true
+                }
+            }
+        }
     }
 
 
