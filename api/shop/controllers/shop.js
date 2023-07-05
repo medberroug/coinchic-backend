@@ -445,11 +445,49 @@ module.exports = {
             isCatalog: shop.catalog.length > 0 ? true : false,
             isActive: shop.status
         }
+    },
 
-
+    async editMenu(ctx) {
+        const { shopId } = ctx.params;
+        let shop = await strapi.services.shop.findOne({
+            id: shopId,
+        });
+        if (ctx.request.body.action == "create") {
+            shop.catalog.push({
+                categoryName: ctx.request.body.categoryName,
+                items: []
+            })
+            await strapi.services.shop.update({ id: shopId }, {
+                catalog: shop.catalog,
+            })
+            return true
+        } else if (ctx.request.body.action == "edit") {
+            for (let i = 0; i < shop.catalog.length; i++) {
+                if (shop.catalog[i].id == ctx.request.body.catalogId) {
+                    shop.catalog[i].categoryName = ctx.request.body.categoryName
+                    await strapi.services.shop.update({ id: shopId }, {
+                        catalog: shop.catalog,
+                    })
+                    return true
+                }
+            }
+        } else if (ctx.request.body.action == "delete") {
+            for (let i = 0; i < shop.catalog.length; i++) {
+                let index
+                if (shop.catalog[i].id == ctx.request.body.catalogId) {
+                    shop.catalog.splice(i,1)
+                    await strapi.services.shop.update({ id: shopId }, {
+                        catalog: shop.catalog,
+                    })
+                    return true
+                }
+            }
+        }
 
 
     }
+
+
 
 };
 
