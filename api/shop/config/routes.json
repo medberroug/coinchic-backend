@@ -175,6 +175,13 @@
       "config": {
         "policies": []
       }
+    },{
+      "method": "POST",
+      "path": "/editMenu/:shopId",
+      "handler": "shop.editMenu",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }
