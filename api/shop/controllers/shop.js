@@ -490,7 +490,7 @@ module.exports = {
         let shop = await strapi.services.shop.findOne({
             id: shopId,
         });
-       if (ctx.request.body.action == "create") {
+        if (ctx.request.body.action == "create") {
             for (let i = 0; i < shop.catalog.length; i++) {
                 if (shop.catalog[i].id == ctx.request.body.catalogId) {
                     shop.catalog[i].items.push({
@@ -507,9 +507,9 @@ module.exports = {
         } else if (ctx.request.body.action == "delete") {
             for (let i = 0; i < shop.catalog.length; i++) {
                 if (shop.catalog[i].id == ctx.request.body.catalogId) {
-                    
-                    for(let j=0;j<shop.catalog[i].items.length;j++){
-                        if(shop.catalog[i].items[i].id == ctx.request.body.itemId){
+
+                    for (let j = 0; j < shop.catalog[i].items.length; j++) {
+                        if (shop.catalog[i].items[j].id == ctx.request.body.itemId) {
                             shop.catalog[i].items.splice(j, 1)
                         }
                     }
