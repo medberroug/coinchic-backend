@@ -410,9 +410,13 @@ module.exports = {
         return myShops;
     },
     async KPIShopManager(ctx) {
-        const { shopId } = ctx.params;
+        const { clientId } = ctx.params;
+        let clientX = await strapi.services.client.findOne({
+            id: clientId
+        })
+
         let shop = await strapi.services.shop.findOne({
-            id: shopId,
+            id: clientX.user.shop,
         });
         let client = await strapi.services.client.find()
         let avgReview = null
@@ -434,7 +438,7 @@ module.exports = {
         }
         return {
             shopId: shop.id,
-            naem: shop.name,
+            name: shop.name,
             avgReview: avgReview,
             likes: likes,
             visitLater: visitLater,
