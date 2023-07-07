@@ -441,7 +441,7 @@ module.exports = {
         return {
             shopId: shop.id,
             name: shop.name,
-            avgReview: avgReview,
+            avgReview: avgReview.toFixed(2),
             likes: likes,
             visitLater: visitLater,
             isCatalog: shop.catalog.length > 0 ? true : false,
@@ -645,9 +645,9 @@ module.exports = {
                 name: shops[i].name,
                 type: shops[i].type,
                 subType: shops[i].subType,
-                address: shops[i].address.street + shops[i].address.city + shops[i].address.country,
+                address: shops[i].address.street + " ," + shops[i].address.city + " ," + shops[i].address.country,
                 avgReview: shops[i].avgReview,
-                firstImage: shops[i].firstImage.url,
+                firstImage: shops[i].firstImage ? shops[i].firstImage.url : null,
                 status: shops[i].status
             })
         }
