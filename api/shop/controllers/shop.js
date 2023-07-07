@@ -688,7 +688,7 @@ module.exports = {
                 email: clients[i].user.email,
                 likes: clients[i].likes.length,
                 visitLater: clients[i].visitLater.length,
-                date: format(parseISO(clients[i].created_at), 'MM/dd/yyyy'),
+                date: format(clients[i].created_at, 'dd/MM/yyyy'),
                 status: !clients[i].user.blocked,
                 shop: clients[i].user.shop
             })
@@ -730,7 +730,7 @@ module.exports = {
             videos: myVideos,
             address: shop.address.street + " ," + shop.address.city + " ," + shop.address.country,
             description: shop.description,
-            date: format(shop.created_at, 'MM/dd/yyyy'),
+            date: format(shop.created_at, 'dd/MM/yyyy'),
         }
     },
     async controlShop(ctx) {
