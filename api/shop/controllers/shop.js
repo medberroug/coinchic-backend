@@ -106,7 +106,7 @@ module.exports = {
         let myShop = {
             id: shop.id,
             name: shop.name,
-            firstImage: shop.firstImage ? shop.firstImage.url : null,
+            firstImage: shop.firstImage ? shop.firstImage.url : "/uploads/image_7_71653b88f5.png?31348571.100000024",
             type: shop.type,
             subType: shop.subType,
             avgReview: shop.avgReview,
