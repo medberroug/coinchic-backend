@@ -530,8 +530,7 @@ module.exports = {
         });
         console.log(ctx.request.body.action);
         console.log(ctx.request.body.fileId);
-        let fileId = ctx.request.body.fileId.toJSON()
-        fileId = fileId[O].id
+        let fileId = ctx.request.body.fileId
         console.log(shopId);
         if (ctx.request.body.action == "firstImage") {
             await strapi.services.shop.update({ id: shopId }, {
