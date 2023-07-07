@@ -730,7 +730,7 @@ module.exports = {
             videos: myVideos,
             address: shop.address.street + " ," + shop.address.city + " ," + shop.address.country,
             description: shop.description,
-            date: format(parseISO(shop.created_at), 'MM/dd/yyyy'),
+            date: format(shop.created_at, 'MM/dd/yyyy'),
         }
     },
     async controlShop(ctx) {
