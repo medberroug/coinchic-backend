@@ -802,6 +802,7 @@ module.exports = {
                 }
             }
             myCategories.push({
+                id: ategories[i].id,
                 name: categories[i].name,
                 number: number
             })
