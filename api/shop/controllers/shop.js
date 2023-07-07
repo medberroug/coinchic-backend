@@ -121,6 +121,7 @@ module.exports = {
             reviews: returnShopReviews(shop),
             description: shop.description,
             menuAdded: shop.catalog.length > 0 ? true : false,
+            status: shop.status
         }
         return myShop
     },
