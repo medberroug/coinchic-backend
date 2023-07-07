@@ -724,6 +724,11 @@ module.exports = {
                 status: false,
             })
         }
+        else if (!shop.waitingValidation && !shop.status) {
+            await strapi.services.shop.update({ id: shopId }, {
+                status: true,
+            })
+        }
         return true
     },
     async popularShop(ctx) {
