@@ -789,6 +789,24 @@ module.exports = {
                 id: ctx.request.body.categoryId
             })
         }
+    },
+    async getCategoriesForAdmin(ctx) {
+        let shops = await strapi.services.shop.find()
+        let categories = await strapi.services.categories.find()
+        let myCategories = []
+        for (let i = 0; i < categories.length; i++) {
+            let number = 0
+            for (let j = 0; j < shops.length; j++) {
+                if (shops[j].type == categories[i].name) {
+                    number = number + 1
+                }
+            }
+            myCategories.push({
+                name: categories[i].name,
+                number: number
+            })
+        }
+        return myCategories
     }
 
 
