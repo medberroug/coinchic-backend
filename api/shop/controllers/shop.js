@@ -724,6 +724,7 @@ module.exports = {
                 status: false,
             })
         }
+        return true
     },
     async popularShop(ctx) {
         const { shopId } = ctx.params;
@@ -737,6 +738,7 @@ module.exports = {
                 popular: true,
             })
         }
+        return true
     },
     async controlCatalog(ctx) {
         if (ctx.request.body.action == "create") {
