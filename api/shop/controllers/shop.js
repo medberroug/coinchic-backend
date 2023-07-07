@@ -693,6 +693,7 @@ module.exports = {
                 shop: clients[i].user.shop
             })
         }
+        return myClients
     },
     async blockUser(ctx) {
         const { clientId } = ctx.params;
