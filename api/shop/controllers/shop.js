@@ -42,7 +42,7 @@ module.exports = {
                 let myIcon = null
                 for (let k = 0; k < categories.length; k++) {
                     if (categories[k].name == allPopularShops[i].type) {
-                        myIcon = categories[k].icon ? categories[k].icon.url : null
+                        myIcon = categories[k].icon ? categories[k].icon.url : "/uploads/image_7_71653b88f5.png?31348571.100000024"
                     }
                 }
                 topShopsByCategories.push({
@@ -802,7 +802,8 @@ module.exports = {
                 }
             }
             myCategories.push({
-                id: ategories[i].id,
+                id: categories[i].id,
+                icon: categories[i].icon ? categories[i].icon.url : "/uploads/image_7_71653b88f5.png?31348571.100000024"
                 name: categories[i].name,
                 number: number
             })
