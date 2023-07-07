@@ -520,6 +520,61 @@ module.exports = {
                 }
             }
         }
+    },
+    async editMedia(ctx) {
+        const { shopId } = ctx.params;
+        let shop = await strapi.services.shop.findOne({
+            id: shopId,
+        });
+
+        if (ctx.request.body.action == "firstImage") {
+            await strapi.services.shop.update({ id: shopId }, {
+                firstImage: {
+                    id: ctx.request.body.fileId
+                },
+            })
+            return true
+        } else if (ctx.request.body.action == "addImage") {
+            shop.images.push({
+                id: ctx.request.body.fileId
+            })
+            await strapi.services.shop.update({ id: shopId }, {
+                images: shop.images,
+            })
+            return true
+        } else if (ctx.request.body.action == "deleteImage") {
+            for (let i = 0; i < shop.images.length; i++) {
+                if (ctx.request.body.fileId == shop.images[i].id) {
+                    shop.images.splice(i, 1)
+                    await strapi.services.shop.update({ id: shopId }, {
+                        images: shop.images,
+                    })
+                    return true
+                }
+
+            }
+            return true
+        } else if (ctx.request.body.action == "addvideo") {
+            shop.videos.push({
+                id: ctx.request.body.fileId
+            })
+            await strapi.services.shop.update({ id: shopId }, {
+                videos: shop.videos,
+            })
+            return true
+        } else if (ctx.request.body.action == "deleteVideo") {
+            for (let i = 0; i < shop.videos.length; i++) {
+                if (ctx.request.body.fileId == shop.videos[i].id) {
+                    shop.videos.splice(i, 1)
+                    await strapi.services.shop.update({ id: shopId }, {
+                        videos: shop.videos,
+                    })
+                    return true
+                }
+
+            }
+            return true
+        }
     }
 
 

@@ -191,6 +191,13 @@
       "config": {
         "policies": []
       }
+    },{
+      "method": "POST",
+      "path": "/editMedia/:shopId",
+      "handler": "shop.editMedia",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }
