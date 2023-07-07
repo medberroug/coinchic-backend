@@ -649,7 +649,7 @@ module.exports = {
                 avgReview: shops[i].avgReview,
                 firstImage: shops[i].firstImage ? shops[i].firstImage.url : null,
                 status: shops[i].status,
-                popluar: shops[i].popluar
+                popular: shops[i].popular
             })
         }
         return myShops
