@@ -648,7 +648,8 @@ module.exports = {
                 address: shops[i].address.street + " ," + shops[i].address.city + " ," + shops[i].address.country,
                 avgReview: shops[i].avgReview,
                 firstImage: shops[i].firstImage ? shops[i].firstImage.url : null,
-                status: shops[i].status
+                status: shops[i].status,
+                popluar: shops[i].popluar
             })
         }
         return myShops
