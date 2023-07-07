@@ -191,10 +191,83 @@
       "config": {
         "policies": []
       }
-    },{
+    },
+    {
       "method": "POST",
       "path": "/editMedia/:shopId",
       "handler": "shop.editMedia",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/getTopRatedShops",
+      "handler": "shop.getTopRatedShops",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/KPIforAdmin",
+      "handler": "shop.KPIforAdmin",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/getShopsForAdmin",
+      "handler": "shop.getShopsForAdmin",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/getUsersForAdmin",
+      "handler": "shop.getUsersForAdmin",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/blockUser/:clientId",
+      "handler": "shop.blockUser",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/pendingShop/:shopId",
+      "handler": "shop.pendingShop",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/controlShop/:shopId",
+      "handler": "shop.controlShop",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/controlCatalog",
+      "handler": "shop.controlCatalog",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/popularShop/:shopId",
+      "handler": "shop.popularShop",
       "config": {
         "policies": []
       }

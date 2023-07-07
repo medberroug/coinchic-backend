@@ -1,6 +1,7 @@
 'use strict';
 var isWithinInterval = require('date-fns/isWithinInterval')
 var parseISO = require('date-fns/parseISO')
+var format = require('date-fns/format')
 /**
  * Read the documentation (https://strapi.io/documentation/developer-docs/latest/development/backend-customization.html#core-controllers)
  * to customize this controller
@@ -422,6 +423,7 @@ module.exports = {
         let avgReview = null
         let likes = 0
         let visitLater = 0
+
         avgReview = shop.avgReview
         for (let i = 0; i < client.length; i++) {
             for (let j = 0; j < client[i].likes.length; j++) {
@@ -528,12 +530,16 @@ module.exports = {
         });
 
         if (ctx.request.body.action == "firstImage") {
-            await strapi.services.shop.update({ id: shopId }, {
-                firstImage: {
-                    id: ctx.request.body.fileId
-                },
-            })
-            return true
+            try {
+                await strapi.services.shop.update({ id: shopId }, {
+                    firstImage: {
+                        id: ctx.request.body.fileId
+                    },
+                })
+                return true
+            } catch (error) {
+                console.log(error);
+            }
         } else if (ctx.request.body.action == "addImage") {
             shop.images.push({
                 id: ctx.request.body.fileId
@@ -575,7 +581,185 @@ module.exports = {
             }
             return true
         }
+    },
+    async getTopRatedShops(ctx) {
+        let shops = await strapi.services.shop.find({ status: true });
+        shops = shops.sort((a, b) => b.avgReview - a.avgReview);
+        shops = shops.slice(0, 5);
+        let myShops = []
+        for (let i = 0; i < shops.length; i++) {
+            myShops.push({
+                id: shops[i].id,
+                name: shops[i].name,
+                type: shops[i].type,
+                subType: shops[i].subType,
+                avgReview: shops[i].avgReview,
+                firstImage: shops[i].firstImage.url
+            })
+        }
+
+        return myShops
+    },
+    async KPIforAdmin(ctx) {
+        let shops = await strapi.services.shop.find();
+        let clients = await strapi.services.client.find()
+        let totalShops = 0;
+        let activeShops = 0;
+        let popularShops = 0
+        let pendingShops = 0
+        for (let i = 0; i < shops.length; i++) {
+            totalShops = totalShops + 1
+            if (shops[i].status) {
+                activeShops = activeShops + 1
+            }
+            if (shops[i].popular) {
+                popularShops = popularShops + 1
+            }
+            if (shops[i].waitingValidation) {
+                pendingShops = pendingShops + 1
+            }
+        }
+        let totalClients = 0
+        let activeClients = 0
+
+        for (let j = 0; j < clients.length; j++) {
+            totalClients = totalClients + 1
+            if (!clients[j].user.blocked) {
+                activeClients = activeClients + 1
+            }
+        }
+        return {
+            totalShops,
+            activeShops,
+            popularShops,
+            pendingShops,
+            totalClients,
+            activeClients
+        }
+    },
+    async getShopsForAdmin(ctx) {
+        let shops = await strapi.services.shop.find();
+        let myShops = []
+        for (let i = 0; i < shops.length; i++) {
+            myShops.push({
+                id: shops[i].id,
+                name: shops[i].name,
+                type: shops[i].type,
+                subType: shops[i].subType,
+                address: shops[i].address.street + shops[i].address.city + shops[i].address.country,
+                avgReview: shops[i].avgReview,
+                firstImage: shops[i].firstImage.url,
+                status: shops[i].status
+            })
+        }
+        return myShops
+    },
+    async getUsersForAdmin(ctx) {
+        let clients = await strapi.services.client.find()
+        myClients = []
+        for (let i = 0; i < clients.length; i++) {
+            myClients.push({
+                id: clients[i].id,
+                name: clients[i].name,
+                phone: clients[i].user.username,
+                email: clients[i].user.email,
+                likes: clients[i].likes.length,
+                visitLater: clients[i].visitLater.length,
+                date: format(parseISO(clients[i].created_at), 'MM/dd/yyyy'),
+                status: !clients[i].user.blocked,
+                shop: clients[i].user.shop
+            })
+        }
+    },
+    async blockUser(ctx) {
+        const { clientId } = ctx.params;
+        let client = await strapi.services.client.findOne({ id: clientId })
+        if (client.user.blocked) {
+            await strapi.plugins['users-permissions'].services.user.update({ id: client.user.id }, { blocked: false });
+        } else {
+            await strapi.plugins['users-permissions'].services.user.update({ id: client.user.id }, { blocked: true });
+        }
+        return true
+    },
+    async pendingShop(ctx) {
+        const { shopId } = ctx.params;
+        let shop = await strapi.services.shop.findOne({ id: shopId })
+        let myImages = []
+        let myVideos = []
+        for (let i = 0; i < shop.images.length; i++) {
+            myImages.push({
+                url: shop.images[i].url,
+                id: shop.images[i].id
+            })
+        }
+        for (let i = 0; i < shop.videos.length; i++) {
+            myVideos.push({
+                url: shop.videos[i].url,
+                id: shop.videos[i].id
+            })
+        }
+        return {
+            name: shop.name,
+            firstImage: shop.firstImage ? shop.firstImage.url : null,
+            type: shop.type,
+            subType: shop.subType,
+            images: myImages,
+            videos: myVideos,
+            address: shop.address.street + " ," + shop.address.city + " ," + shop.address.country,
+            description: shop.description,
+            date: format(parseISO(shop.created_at), 'MM/dd/yyyy'),
+        }
+    },
+    async controlShop(ctx) {
+        const { shopId } = ctx.params;
+        let shop = await strapi.services.shop.findOne({ id: shopId })
+        if (shop.waitingValidation && !shop.status) {
+            await strapi.services.shop.update({ id: shopId }, {
+                status: true,
+                waitingValidation: false
+            })
+        } else if (!shop.waitingValidation && shop.status) {
+            await strapi.services.shop.update({ id: shopId }, {
+                status: false,
+            })
+        }
+    },
+    async popularShop(ctx) {
+        const { shopId } = ctx.params;
+        let shop = await strapi.services.shop.findOne({ id: shopId })
+        if (shop.popular) {
+            await strapi.services.shop.update({ id: shopId }, {
+                popular: false,
+            })
+        } else {
+            await strapi.services.shop.update({ id: shopId }, {
+                popular: true,
+            })
+        }
+    },
+    async controlCatalog(ctx) {
+        if (ctx.request.body.action == "create") {
+            strapi.services.categories.create({
+                name: ctx.request.body.name,
+                status: true,
+                icon: {
+                    id: ctx.request.body.imageId
+                }
+            })
+        } else if (ctx.request.body.action == "edit") {
+            await strapi.services.categories.update({ id: ctx.request.body.categoryId }, {
+                name: ctx.request.body.name,
+                icon: {
+                    id: ctx.request.body.imageId
+                }
+            })
+        } else if (ctx.request.body.action == "delete") {
+            await strapi.services.categories.delete({
+                id: ctx.request.body.categoryId
+            })
+        }
     }
+
 
 
 
