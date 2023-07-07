@@ -803,7 +803,7 @@ module.exports = {
             }
             myCategories.push({
                 id: categories[i].id,
-                icon: categories[i].icon ? categories[i].icon.url : "/uploads/image_7_71653b88f5.png?31348571.100000024"
+                icon: categories[i].icon ? categories[i].icon.url : "/uploads/image_7_71653b88f5.png?31348571.100000024",
                 name: categories[i].name,
                 number: number
             })
