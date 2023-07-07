@@ -657,6 +657,26 @@ module.exports = {
         }
         return myShops
     },
+    async getPendingShopsForAdmin(ctx) {
+        let shops = await strapi.services.shop.find();
+        let myShops = []
+        for (let i = 0; i < shops.length; i++) {
+            if (shops[i].waitingValidation) {
+                myShops.push({
+                    id: shops[i].id,
+                    name: shops[i].name,
+                    type: shops[i].type,
+                    subType: shops[i].subType,
+                    address: shops[i].address.street + " ," + shops[i].address.city + " ," + shops[i].address.country,
+                    avgReview: shops[i].avgReview,
+                    firstImage: shops[i].firstImage ? shops[i].firstImage.url : "/uploads/image_7_71653b88f5.png?31348571.100000024",
+                    status: shops[i].status,
+                    popular: shops[i].popular
+                })
+            }
+        }
+        return myShops
+    },
     async getUsersForAdmin(ctx) {
         let clients = await strapi.services.client.find()
         myClients = []

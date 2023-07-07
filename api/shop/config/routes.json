@@ -271,6 +271,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "GET",
+      "path": "/getPendingShopsForAdmin",
+      "handler": "shop.getPendingShopsForAdmin",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }
