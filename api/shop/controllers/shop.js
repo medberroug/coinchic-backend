@@ -699,9 +699,9 @@ module.exports = {
         const { clientId } = ctx.params;
         let client = await strapi.services.client.findOne({ id: clientId })
         if (client.user.blocked) {
-            await strapi.plugins['users-permissions'].services.user.update({ id: client.user.id }, { blocked: false });
+            await strapi.plugins['users-permissions'].services.user.edit({ id: client.user.id }, { blocked: false });
         } else {
-            await strapi.plugins['users-permissions'].services.user.update({ id: client.user.id }, { blocked: true });
+            await strapi.plugins['users-permissions'].services.user.edit({ id: client.user.id }, { blocked: true });
         }
         return true
     },
