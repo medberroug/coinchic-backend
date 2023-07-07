@@ -679,7 +679,7 @@ module.exports = {
     },
     async getUsersForAdmin(ctx) {
         let clients = await strapi.services.client.find()
-        myClients = []
+        let myClients = []
         for (let i = 0; i < clients.length; i++) {
             myClients.push({
                 id: clients[i].id,
