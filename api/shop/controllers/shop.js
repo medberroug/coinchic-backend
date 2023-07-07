@@ -648,7 +648,7 @@ module.exports = {
                 subType: shops[i].subType,
                 address: shops[i].address.street + " ," + shops[i].address.city + " ," + shops[i].address.country,
                 avgReview: shops[i].avgReview,
-                firstImage: shops[i].firstImage ? shops[i].firstImage.url : null,
+                firstImage: shops[i].firstImage ? shops[i].firstImage.url : "/uploads/image_7_71653b88f5.png?31348571.100000024",
                 status: shops[i].status,
                 popular: shops[i].popular
             })
@@ -701,7 +701,7 @@ module.exports = {
         }
         return {
             name: shop.name,
-            firstImage: shop.firstImage ? shop.firstImage.url : null,
+            firstImage: shop.firstImage ? shop.firstImage.url : "/uploads/image_7_71653b88f5.png?31348571.100000024",
             type: shop.type,
             subType: shop.subType,
             images: myImages,
