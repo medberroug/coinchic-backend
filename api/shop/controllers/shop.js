@@ -530,22 +530,19 @@ module.exports = {
         });
         console.log(ctx.request.body.action);
         console.log(ctx.request.body.fileId);
+        let fileId = ctx.request.body.fileId.toJSON()
+        fileId = fileId[O].id
         console.log(shopId);
         if (ctx.request.body.action == "firstImage") {
-            try {
-                
-                await strapi.services.shop.update({ id: shopId }, {
-                    firstImage: {
-                        id: ctx.request.body.fileId
-                    },
-                })
-                return true
-            } catch (error) {
-                console.log(error);
-            }
+            await strapi.services.shop.update({ id: shopId }, {
+                firstImage: {
+                    id: fileId
+                },
+            })
+            return true
         } else if (ctx.request.body.action == "addImage") {
             shop.images.push({
-                id: ctx.request.body.fileId
+                id: fileId
             })
             await strapi.services.shop.update({ id: shopId }, {
                 images: shop.images,
@@ -553,7 +550,7 @@ module.exports = {
             return true
         } else if (ctx.request.body.action == "deleteImage") {
             for (let i = 0; i < shop.images.length; i++) {
-                if (ctx.request.body.fileId == shop.images[i].id) {
+                if (fileId == shop.images[i].id) {
                     shop.images.splice(i, 1)
                     await strapi.services.shop.update({ id: shopId }, {
                         images: shop.images,
@@ -565,7 +562,7 @@ module.exports = {
             return true
         } else if (ctx.request.body.action == "addvideo") {
             shop.videos.push({
-                id: ctx.request.body.fileId
+                id: fileId
             })
             await strapi.services.shop.update({ id: shopId }, {
                 videos: shop.videos,
@@ -573,7 +570,7 @@ module.exports = {
             return true
         } else if (ctx.request.body.action == "deleteVideo") {
             for (let i = 0; i < shop.videos.length; i++) {
-                if (ctx.request.body.fileId == shop.videos[i].id) {
+                if (fileId == shop.videos[i].id) {
                     shop.videos.splice(i, 1)
                     await strapi.services.shop.update({ id: shopId }, {
                         videos: shop.videos,
