@@ -818,6 +818,28 @@ module.exports = {
             })
         }
         return myCategories
+    },
+    async getDataForFilter(ctx) {
+        let shops = await strapi.services.shop.find()
+        let categories = await strapi.services.categories.find()
+        let myCategories = []
+        for (let i = 0; i < categories.length; i++) {
+            myCategories.push({
+                name: categories[i].name,
+            })
+        }
+        for (let j = 0; j < shops.length; j++) {
+            myCategories.push({
+                name: categories[i].name,
+            })
+        }
+        let cities = shops.map(item => item.address.city);
+        let myCities = cities.filter((city, index) => cities.indexOf(city) === index);
+
+        return {
+            categories: myCategories,
+            cities: myCities
+        }
     }
 
 

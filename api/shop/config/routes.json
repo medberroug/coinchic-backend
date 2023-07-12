@@ -287,6 +287,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "GET",
+      "path": "/getDataForFilter",
+      "handler": "shop.getDataForFilter",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }
