@@ -830,7 +830,7 @@ module.exports = {
         }
         for (let j = 0; j < shops.length; j++) {
             myCategories.push({
-                name: categories[i].name,
+                name: categories[j].name,
             })
         }
         let cities = shops.map(item => item.address.city);
