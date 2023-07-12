@@ -161,7 +161,7 @@
       }
     },
     {
-      "method": "GET",
+      "method": "POST",
       "path": "/filter/:clientId",
       "handler": "shop.filter",
       "config": {
