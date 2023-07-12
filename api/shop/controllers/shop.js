@@ -824,9 +824,9 @@ module.exports = {
         let categories = await strapi.services.categories.find()
         let myCategories = []
         for (let i = 0; i < categories.length; i++) {
-            myCategories.push({
-                name: categories[i].name,
-            })
+            myCategories.push(
+                categories[i].name,
+            )
         }
 
         let cities = shops.map(item => item.address.city);
