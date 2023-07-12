@@ -828,11 +828,7 @@ module.exports = {
                 name: categories[i].name,
             })
         }
-        for (let j = 0; j < shops.length; j++) {
-            myCategories.push({
-                name: categories[j].name,
-            })
-        }
+
         let cities = shops.map(item => item.address.city);
         let myCities = cities.filter((city, index) => cities.indexOf(city) === index);
 
