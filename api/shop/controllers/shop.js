@@ -343,7 +343,8 @@ module.exports = {
             name: client.name,
             shopExist: client.user.shop ? true : false,
             shopPending: shopPending,
-            shop: myShop
+            shop: myShop,
+            isAdmin : client.isAdmin
 
         }
         return myProfile
@@ -690,7 +691,8 @@ module.exports = {
                 visitLater: clients[i].visitLater.length,
                 date: format(clients[i].created_at, 'dd/MM/yyyy'),
                 status: !clients[i].user.blocked,
-                shop: clients[i].user.shop
+                shop: clients[i].user.shop,
+                isAdmin: clients[i].isAdmin
             })
         }
         return myClients
