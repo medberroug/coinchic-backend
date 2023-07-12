@@ -789,6 +789,7 @@ module.exports = {
                 id: ctx.request.body.categoryId
             })
         }
+        return true
     },
     async getCategoriesForAdmin(ctx) {
         let shops = await strapi.services.shop.find()
