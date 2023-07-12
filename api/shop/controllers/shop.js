@@ -344,7 +344,7 @@ module.exports = {
             shopExist: client.user.shop ? true : false,
             shopPending: shopPending,
             shop: myShop,
-            isAdmin : client.isAdmin
+            isAdmin: client.isAdmin
 
         }
         return myProfile
@@ -381,7 +381,13 @@ module.exports = {
         return myShops
     },
     async filter(ctx) {
-        const { type, city, stars, popular, clientId } = ctx.query;
+        const { clientId } = ctx.query;
+
+        let type = ctx.request.body.type
+        let city = ctx.request.body.city
+        let stars = ctx.request.body.stars
+        let popular = ctx.request.body.popular
+
         let client = await strapi.services.client.findOne({
             id: clientId
         })
